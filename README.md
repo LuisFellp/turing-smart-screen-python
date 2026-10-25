@@ -1,139 +1,116 @@
-> **Fork do Luis:** osciloscópio de fósforo e monitor de UTI animados para a TURZX 3.5" (revisão A), temas novos e correções no driver da revisão A (corrupção de imagem, comando 195). Veja **[TELINHA.md](TELINHA.md)**.
+# Telinha do Luis: osciloscópio, monitor de UTI e temas
 
-# ![Icon](https://raw.githubusercontent.com/mathoudebine/turing-smart-screen-python/main/res/icons/monitor-icon-17865/24.png) turing-smart-screen-python
+> Baseado no [turing-smart-screen-python](https://github.com/mathoudebine/turing-smart-screen-python) de Matthieu Houdebine. Documentação do projeto original: [README-original.md](README-original.md).
 
-> [!WARNING]
-> 
-> This project is **not affiliated, associated, authorized, endorsed by, or in any way officially connected with Turing / XuanFang / Kipye brands**, or any of theirs subsidiaries, affiliates, manufacturers or sellers of their products. All product and company names are the registered trademarks of their original owners.
-> 
-> This project is an open-source alternative software, NOT the original software provided for the smart screens. **Please do not open issues for USBMonitor.exe/ExtendScreen.exe or for the smart screens hardware here**.
-> * for Turing Smart Screen, use the official forum here: http://discuz.turzx.com/
-> * for other smart screens, contact your reseller
+Fork do [turing-smart-screen-python](https://github.com/mathoudebine/turing-smart-screen-python) usado numa tela
+**TURZX 3.5" (revisão A, "UsbMonitor", USB `1A86:5722`)**, num PC com Ryzen 7 9800X3D, Radeon RX 9070 XT e placa-mãe
+MSI X870E. Traz dois modos animados novos, temas, correções no driver da revisão A e o que aprendemos sobre o protocolo
+dessa tela.
 
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) ![Windows](https://img.shields.io/badge/Windows%2010%2F11-0078D6?style=for-the-badge&logoColor=white&logo=data:image/svg%2bxml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+V2luZG93czwvdGl0bGU+PHBhdGggZmlsbCA9ICIjRkZGRkZGIiBkPSJNMCwwSDExLjM3N1YxMS4zNzJIMFpNMTIuNjIzLDBIMjRWMTEuMzcySDEyLjYyM1pNMCwxMi42MjNIMTEuMzc3VjI0SDBabTEyLjYyMywwSDI0VjI0SDEyLjYyMyIvPjwvc3ZnPg==) [![macOS](https://img.shields.io/badge/mac%20os%20(⚠️major%20bug)-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/mathoudebine/turing-smart-screen-python/issues/7) ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-A22846?style=for-the-badge&logo=Raspberry%20Pi&logoColor=white) ![Python](https://img.shields.io/badge/Python-3.X-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) [![Licence](https://img.shields.io/github/license/mathoudebine/turing-smart-screen-python?style=for-the-badge)](./LICENSE)
-  
-A Python system monitor program and an abstraction library for **small IPS USB-C displays.**    
+| Osciloscópio (`osciloscopio.py`) | Monitor de UTI (`vitais.py`) |
+|---|---|
+| ![osciloscópio](docs/telinha/osciloscopio.png) | ![monitor de UTI](docs/telinha/vitais.png) |
 
-Supported operating systems : macOS, Windows, Linux (incl. Raspberry Pi), basically all OS that support Python 3.9+  
+*Imagens geradas pelo modo `--preview`, com valores simulados parecidos com uma partida de Arc Raiders (as leituras
+reais exigem a tela e administrador).*
 
-### ✅ Supported smart screens models:
+## Modos animados
 
-| ✅ Turing Smart Screen / TURZX                                                                                                                                                                                                                                                                                                                                                                  |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="res/docs/turing.webp" width="30%" height="30%"/> <img src="res/docs/turing46inch.png" width="30%" height="30%"/> <img src="res/docs/turing5inch.png" width="30%" height="30%"/> <br/> <img src="res/docs/turing2inch.webp" width="30%" height="30%"/> <img src="res/docs/turing8inch.png" width="30%" height="30%"/> <img src="res/docs/turing8inch.webp" width="30%" height="30%"/> |
-| All available sizes and hardware revisions supported: **2.1" / 2.8" / 3.5" / 4.6" / 5" / 5.2" / 8.0" / 8.8" / 9.2" / 12.3"** <br/>UART and USB protocols supported. Note: no video or storage support for now                                                                                                                                                                                  |
+### `osciloscopio.py`: osciloscópio de fósforo, 4 canais
 
-| ✅ XuanFang 3.5"                                   | ✅ [UsbPCMonitor 3.5" / 5"](https://aliexpress.com/item/1005003931363455.html)                       | ✅ Kipye Qiye Smart Display 3.5"                                                  |
-|---------------------------------------------------|-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| <img src="res/docs/xuanfang.webp"/>               | <img src="res/docs/UsbPCMonitor_5inch.webp" width="60%" height="60%"/>                              | <img src="res/docs/kipye-qiye-35.webp" width="60%" height="60%"/>                |
-| revision B & flagship (with backplate & RGB LEDs) | Unknown manufacturer, visually similar to Turing 3.5" / 5". Original software is `UsbPCMonitor.exe` | Front panel has an engraved inscription "奇叶智显" Qiye Zhixian (Qiye Smart Display) |
+Cada traço é o sinal medido ao longo do tempo, com retícula de 10 x 8 divisões, base de tempo (`H 583 ms/div`) e
+rastro de fósforo que esmaece em 4 tons.
 
-| ✅ WeAct Studio Display FS V1 0.96"                            | ✅ WeAct Studio Display FS V1 3.5"                            |
-|---------------------------------------------------------------|--------------------------------------------------------------|
-| <img src="res/docs/weact_0.96.jpg" width="60%" height="60%"/> | <img src="res/docs/weact_3.5.png" width="60%" height="60%"/> |
+| Canal | Sinal | Leituras | Escala |
+|---|---|---|---|
+| CH1 cpu | carga da CPU (psutil) | 10/s | 50 %/div |
+| CH2 gpu | carga do motor 3D (contador "GPU Engine" do Windows, o mesmo do Gerenciador de Tarefas) | 10/s | 50 %/div |
+| CH3 ram | memória em uso | 10/s | 1 %/div em volta da média recente (acoplamento AC) |
+| CH4 temp | a mais quente entre CPU Tctl e hot spot da GPU | 1/s | 5 °C/div em volta da média recente |
 
-<details>
+Os traços são desenhados com o **comando 195** (pixels soltos, ver abaixo): só os pixels que mudam vão para a tela.
+Roda a 30 quadros/s usando ~25 % da banda da tela. O painel mostra os valores e a barra de baixo, as ventoinhas.
 
-<summary><h3>❌ Not (yet) supported / not tested smart screen models</h3></summary>
+### `vitais.py`: monitor de UTI enevoado
 
-| ❔ _AIDA64 / AX206 / USB2LCD..._                                                                                                                                                                        | ❔ _[ACEMAGIC S1 Mini PC - integrated 1,9″ display](https://acemagic.com/products/acemagic-s1-12th-alder-laker-n95-mini-pc)_                                  |
-|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="res/docs/ax206.jpg" width="45%" height="45%" /> <img src="res/docs/geekteches_ad35.jpg" width="45%" height="45%" /> <br/> <img src="res/docs/smartcool_lcd.webp" width="45%" height="45%" /> | <img src="res/docs/acemagic-s1-mini.jpg"/>                                                                                                                   |
-| Not supported for now. Produced by multiple manufacturers, all use the same [Appotech AX206 hacked photo frame firmware](https://github.com/dreamlayers/dpf-ax). Supported by AIDA64 and lcd4linux     | Not supported for now but could be integrated: protocol has been decoded, [see here](https://github.com/mathoudebine/turing-smart-screen-python/issues/677). |
+ECG = CPU (frequência cardíaca = 55 + 1,25 x carga), pleth = GPU (amplitude = carga), respiração = RAM, sobre o
+fundo do tema `fade-luis`. Desenhado por faixas de bitmap, 15 quadros/s.
 
-| ❔ _NXElec BeadaPanel 3/4/5/6/7_                                                                                                                                                                                                                                                                                           |
-|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="res/docs/beadapanel-3.jpg" width="30%" height="30%" /> <img src="res/docs/beadapanel-5s.jpg" width="30%" height="30%" /> <img src="res/docs/beadapanel-6.jpg" width="30%" height="30%" />                                                                                                                       |
-| Not supported for now but could be integrated: [Pankel-Link V1.0 Protocol Specification](https://www.nxelec.com/documents/bp/Panel-Link_USB_Media_Stream_Transport_Protocol_Rev10.pdf) / [Status-Link V1.1 Protocol Specification](https://www.nxelec.com/documents/bp/Status-Link_USB_Panel_Control_Protocol_Rev11.pdf). |
+Nos dois modos, leitura ausente vira `--` e traço reto cinza: **nunca um valor inventado ou congelado**. Alarme em
+vermelho acima de 90 °C (CPU) ou 100 °C (hot spot da GPU).
 
-| ❌ _Waveshare [2.1inch](https://www.waveshare.com/wiki/2.1inch-USB-Monitor) / [2.8inch](https://www.waveshare.com/wiki/2.8inch-USB-Monitor) / [5inch](https://www.waveshare.com/wiki/5inch-USB-Monitor) / [7inch](https://www.waveshare.com/wiki/7inch-USB-Monitor) USB-Monitor_                                                                                                            | ❌ _[GUITION Smart screen 3.5"](https://aliexpress.com/item/1005006169962183.html)_                                                                                                                                                                                                          |
-|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="res/docs/waveshare-21inch-28inch.png"/>                                                                                                                                                                                                                                                                                                                                          | <img src="res/docs/guition.webp"/>                                                                                                                                                                                                                                                          |
-| Sold on [Waveshare shop](https://www.waveshare.com/2.8inch-usb-monitor.htm) or [Aliexpress](https://fr.aliexpress.com/item/1005006071685067.html). Managed by [proprietary Windows software "Waveshare PC Monitor"](https://github.com/mathoudebine/turing-smart-screen-python/wiki/Vendor-apps#waveshare-pc-monitor---vendor-app). Cannot be supported by this project: needs a firmware. | Managed by [proprietary Windows software "GUITION Smart screen"](https://github.com/mathoudebine/turing-smart-screen-python/wiki/Vendor-apps#guition---vendor-app). Cannot be supported by this project: [see here](https://github.com/mathoudebine/turing-smart-screen-python/issues/426). |
+### Sensores e FPS
 
-| ❌ _[(Fuldho?) 3.5" IPS Screen](https://aliexpress.com/item/1005005632018367.html)_                                                                                                                                                     |
-|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="res/docs/fuldho_3.5.jpg" width="40%" height="40%" />                                                                                                                                                                         |
-| Managed by [proprietary Windows software `SmartMonitor.exe`](https://smartdisplay.lanzouo.com/b04jvavkb). Cannot be supported by this project: [see here](https://github.com/mathoudebine/turing-smart-screen-python/discussions/298). |
+- **LibreHardwareMonitor** (já incluso em `external/`, com o driver PawnIO): CPU Tctl, hot spot da GPU, VRAM,
+  ventoinhas da placa-mãe (inclusive bomba do water cooler). Precisa de **administrador**; sem admin o LHM devolve
+  Tctl 0,0 e nenhum sensor da placa, então os modos recusam usá-lo e caem para o HWiNFO.
+- **PresentMon** (Intel, ETW, sem injeção no jogo): FPS do app em primeiro plano, com "memória" do último app que
+  entregava quadros (ex.: um app auxiliar por cima do jogo). Baixe o executável, ver
+  [`external/PresentMon/LEIA-ME.md`](external/PresentMon/LEIA-ME.md).
+- **HWiNFO** (opcional, modo reserva sem admin): `HW_SENSORS: HWINFO` lê o "Gadget" do HWiNFO pelo registro
+  (`library/sensors/sensors_hwinfo.py`). Ao fechar, o HWiNFO deixa os últimos valores no registro; por isso o
+  processo dele é checado antes de ler.
 
-</details>
+## Instalação (Windows)
 
-### [> What is my smart screen model?](https://github.com/mathoudebine/turing-smart-screen-python/wiki/Hardware-revisions)  
+```bat
+python -m venv .venv
+.venv\Scripts\pip install -r requirements.txt
+```
 
-**Please note all listed smart screens are different products** designed and produced by different companies, despite having a similar appearance. Their communication protocol is also different.  
-This project offers an abstraction layer to manage all of these products in a unified way, including some product-specific features like backplate RGB LEDs for available models!
+1. Instale o PawnIO (`external\PawnIO\PawnIO_setup.exe`) e baixe o PresentMon para `external\PresentMon\`.
+2. Ajuste `COM_PORT` e `BRIGHTNESS` no `config.yaml` (as seções `vitais:` e `osciloscopio:` têm FPS e banda).
+3. Teste sem a tela: `.venv\Scripts\python osciloscopio.py --preview 8 --out preview.png` (o preview também confere
+   os pacotes 195 numa tela virtual e imprime os pixels divergentes, que devem ser 0).
+4. Rode como administrador: `.venv\Scripts\pythonw osciloscopio.py`. Para iniciar com o Windows, uma tarefa
+   agendada no logon com "Executar com privilégios mais altos".
 
-If you haven't received your screen yet but want to start developing your theme now, you can use the [**"simulated LCD" mode!**](https://github.com/mathoudebine/turing-smart-screen-python/wiki/Simulated-display)
+Os temas continuam rodando pelo `main.py` como no projeto original.
 
-## How to start
+## Temas
 
-### [> Follow instructions on the wiki to configure and start this project.](https://github.com/mathoudebine/turing-smart-screen-python/wiki)
+| aurora-luis | metro-luis | aneis-luis |
+|---|---|---|
+| ![](res/themes/aurora-luis/preview.png) | ![](res/themes/metro-luis/preview.png) | ![](res/themes/aneis-luis/preview.png) |
 
-There are 2 possible uses of this project Python code:
-* **[as a System Monitor](#system-monitor)**, a standalone program working with themes to display your computer HW info and custom data in an elegant way.
-[Check if your hardware is supported.](https://github.com/mathoudebine/turing-smart-screen-python/wiki/System-monitor-:-hardware-support)
-* **[integrated in your project](#control-the-display-from-your-python-projects)**, to fully control the display from your own Python code.
+| anything-luis | fade-luis | Cyberpunk-Luis |
+|---|---|---|
+| ![](res/themes/anything-luis/preview.png) | ![](res/themes/fade-luis/preview.png) | ![](res/themes/Cyberpunk-Luis/preview.png) |
 
-## System monitor
+Os fundos são gerados por código (`gerar_fundo.py` em cada pasta). Também há `taiko-luis`. Fontes novas em
+`res/fonts/` (IBM Plex Sans Condensed, Maple Mono, Patrick Hand, Tektur, M PLUS Rounded 1c), todas OFL, com as licenças.
 
-This project is mainly a complete standalone program to use your screen as a system monitor, like the original vendor app.  
-Some themes are already included for a quick start!  
-### [> Configure and start system monitor](https://github.com/mathoudebine/turing-smart-screen-python/wiki/System-monitor-:-how-to-start)
-<img src="res/docs/config_wizard.png"/>  
+## Mudanças na biblioteca
 
-* Fully functional multi-OS code base (operates out of the box, tested on Windows, Linux & MacOS).
-* Display configuration using GUI configuration wizard or `config.yaml` file: no Python code to edit.
-* Compatible with [multiple smart screen models (Turing, XuanFang...)](https://github.com/mathoudebine/turing-smart-screen-python/wiki/Hardware-revisions). Backplate RGB LEDs are also supported for available models!
-* Support [multiple hardware sensors and metrics (CPU/GPU usage, temperatures, memory, disks, etc)](https://github.com/mathoudebine/turing-smart-screen-python/wiki/System-monitor-:-themes#stats-entry) with configurable refresh intervals.
-* Allow [creation of themes (see `res/themes`) with `theme.yaml` files using theme editor](https://github.com/mathoudebine/turing-smart-screen-python/wiki/System-monitor-:-themes) to be [shared with the community!](https://github.com/mathoudebine/turing-smart-screen-python/discussions/categories/themes)
-* Easy to expand: [custom Python data sources](https://github.com/mathoudebine/turing-smart-screen-python/wiki/System-monitor-:-themes#add-custom-stats-to-a-theme) can be written to pull specific information and display it on themes like any other sensor.
-* Auto-detect COM port based on the selected smart screen model.
-* Tray icon with Exit option, useful when the program is running in background.
+| Arquivo | Mudança |
+|---|---|
+| `library/lcd/lcd_comm_rev_a.py` | `Resync()` antes do reset (zera a corrupção depois de um programa morto no meio de uma imagem); imagens grandes em fatias com pausa configurável |
+| `library/lcd/lcd_comm.py` | barras de progresso arredondadas; anéis radiais concêntricos que não se apagam; mais tentativas de abrir a porta e reinício ao reconectar |
+| `library/display.py`, `config.yaml` | opções `SERIAL_SLICE_MAX_BYTES`, `SERIAL_SLICE_PAUSE_MS`, `SERIAL_RESYNC_BYTES`, seções `vitais` e `osciloscopio` |
+| `library/sensors/sensors_hwinfo.py`, `stats.py`, `sensors_custom.py` | backend `HWINFO`; hot spot da GPU sem cair para a temperatura de borda |
+| `library/sensors/sensors_librehardwaremonitor.py` | trava em volta do LHM (3 threads chamando `Update()` ao mesmo tempo deixavam a carga da CPU errada) |
 
-### [> List and preview of included themes](res/themes/themes.md)
-<img src="res/themes/3.5inchTheme2/preview.png" height="150" /> <img src="res/themes/Terminal/preview.png" height="150" /> <img src="res/themes/Cyberpunk-net/preview.png" height="150" /> <img src="res/themes/bash-dark-green-gpu/preview.png" height="150" /> <img src="res/themes/Landscape6Grid/preview.png" width="150" /> <img src="res/themes/LandscapeMagicBlue/preview.png" width="150" /> <img src="res/themes/LandscapeEarth/preview.png" width="150" /> ... [view full list](res/themes/themes.md)
-### [> Themes creation/edition (using theme editor)](https://github.com/mathoudebine/turing-smart-screen-python/wiki/System-monitor-:-themes)
-### [> Themes shared by the community](https://github.com/mathoudebine/turing-smart-screen-python/discussions/categories/themes)
-<img src="https://user-images.githubusercontent.com/79225820/203648707-6f043068-5c9d-454d-9c0a-3d9ea02ece77.jpg" height="150" /> <img src="https://user-images.githubusercontent.com/121983479/210663324-994c987a-6489-4482-8883-db74ef566014.jpg" height="150" />
-<img src="https://user-images.githubusercontent.com/120036534/208128675-897f60cd-5647-40b7-b074-b56b67e775dd.png" height="150" /> <img src="https://user-images.githubusercontent.com/65172896/217549510-149913ac-ef4e-4f61-8f5e-6d768483a02c.png" height="150" /> and more... Share yours!
+## O que aprendemos sobre a tela (revisão A)
 
-## Control the display from your Python projects
+- **Só escrita.** A tela nunca responde (HELLO com 3 s de escuta: 0 bytes) e o app oficial (`UsbMonitor.exe`,
+  TURZX 2.2.1) também nunca lê a porta. Não há ACK, versão de firmware nem leitura de volta.
+- **Banda: 128.000 bytes/s cravados** (2 pacotes USB de 64 B por ms), igual com escrita de 512 B a 300 KB, baud
+  115200/921600/2M e RTS/CTS ligado ou não. O limite é o firmware.
+- **Comando 195 (`DISPLAY_PIXELS`) funciona nesta tela**, apesar de a biblioteca marcá-lo como "só da próxima
+  geração". Formato, tirado do app oficial: pacote fixo de **64 bytes** = cabeçalho de 6 bytes (x, y = origem;
+  `ex` = número de bytes de dados, até 56; `ey` = 0; comando 195) + **uma cor RGB565 big-endian** (2 bytes) + até
+  **28 pares (dx, dy)** de 1 byte relativos à origem, resto zeros. Vazão medida: **1000 pacotes/s = 28.000 pixels/s**,
+  sem perdas (bitmap: 64.000 px/s). Compensa quando muda menos de ~44 % da área retangular equivalente e em fundo
+  liso (uma cor por pacote).
+- **A causa da imagem corrompida**: um programa morto no meio de uma imagem (tarefa parada, desligar o PC) deixa a
+  tela esperando o resto dos pixels; ela come o RESET do programa seguinte como pixel e a serial passa a perder blocos
+  (`Too fast! Slow down!` no log, que a biblioteca original só registra e descarta). Reproduzido 3 de 3 vezes;
+  mandar 307.200 bytes zero antes do reset resolveu (191 blocos perdidos sem, 0 com).
+- **Sessões ETW órfãs**: matar o PresentMon (ou fechar o HWiNFO) deixa a sessão de rastreamento viva no Windows, e
+  sessões órfãs acumuladas fizeram o PresentMon perder todos os eventos. `logman query -ets` lista,
+  `logman stop <nome> -ets` encerra. O monitor usa sempre a mesma sessão ("telinha"), então não acumula.
 
-If you don't want to use your screen for system monitoring, you can just use this project as a module from any Python code to do some simple operations on the display:
-- **Display custom picture**
-- **Display text**
-- **Display horizontal / radial progress bar**
-- **Screen rotation**
-- Clear the screen (blank)
-- Turn the screen on/off
-- Display soft reset
-- Set brightness
-- Set backplate RGB LEDs color (on supported hardware rev.) 
+## Licenças
 
-This project will act as an abstraction library to handle specific protocols and capabilities of each supported smart screen models in a transparent way for the user.
-Check `simple-program.py` as an example.
-
-### [> Control the display from your code](https://github.com/mathoudebine/turing-smart-screen-python/wiki/Control-screen-from-your-own-code)
-
-## Troubleshooting
-If you have trouble running the program as described in the wiki, please check [open/closed issues](https://github.com/mathoudebine/turing-smart-screen-python/issues) & [the wiki Troubleshooting page](https://github.com/mathoudebine/turing-smart-screen-python/wiki/Troubleshooting)
-
-## They're talking about it!
-
-* [Hackaday - Cheap LCD Uses USB Serial](https://hackaday.com/2023/09/11/cheap-lcd-uses-usb-serial/)  
-
-
-* [CNX Software - Turing Smart Screen – A low-cost 3.5-inch USB Type-C information display](https://www.cnx-software.com/2022/04/29/turing-smart-screen-a-low-cost-3-5-inch-usb-type-c-information-display/)
-
-
-* [Phazer Tech - Turing Smart Screen Python ](https://phazertech.com/tutorials/turing-smart-screen.html)
-
-## Star History
-
-<a href="https://www.star-history.com/?repos=mathoudebine%2Fturing-smart-screen-python&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=mathoudebine/turing-smart-screen-python&type=date&theme=dark&legend=top-left&sealed_token=1BULWtfZBsenXy6zd-C2Td6C9UGczg0IYaXK8qrDQy2yhkZvBSdB0kZ5ufjXAD_6CCCaT_VYzmD5XqpPAQwYhe0tlrxJfnRax70YliRnMnqqW2FjVnNEEw9yqhXZir4mhQsrMy4JyyiCdP_BT2yKw8GeVlIcxfxqo6MRk7v0-w-nVPm6bexDVxyG-KPC" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=mathoudebine/turing-smart-screen-python&type=date&legend=top-left&sealed_token=1BULWtfZBsenXy6zd-C2Td6C9UGczg0IYaXK8qrDQy2yhkZvBSdB0kZ5ufjXAD_6CCCaT_VYzmD5XqpPAQwYhe0tlrxJfnRax70YliRnMnqqW2FjVnNEEw9yqhXZir4mhQsrMy4JyyiCdP_BT2yKw8GeVlIcxfxqo6MRk7v0-w-nVPm6bexDVxyG-KPC" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=mathoudebine/turing-smart-screen-python&type=date&legend=top-left&sealed_token=1BULWtfZBsenXy6zd-C2Td6C9UGczg0IYaXK8qrDQy2yhkZvBSdB0kZ5ufjXAD_6CCCaT_VYzmD5XqpPAQwYhe0tlrxJfnRax70YliRnMnqqW2FjVnNEEw9yqhXZir4mhQsrMy4JyyiCdP_BT2yKw8GeVlIcxfxqo6MRk7v0-w-nVPm6bexDVxyG-KPC" />
- </picture>
-</a>
+Código sob GPL-3.0 como o projeto original. Fontes sob SIL OFL 1.1 (arquivos de licença em cada pasta).
+O PresentMon (MIT, Intel) não é distribuído aqui.
