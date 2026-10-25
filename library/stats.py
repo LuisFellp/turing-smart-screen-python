@@ -63,6 +63,16 @@ elif HW_SENSORS == "LHM":
             sys.exit(0)
         except:
             os._exit(0)
+elif HW_SENSORS == "HWINFO":
+    # LOCAL ADDITION (not in upstream): read sensors from HWiNFO's Gadget registry interface
+    if platform.system() == 'Windows':
+        import library.sensors.sensors_hwinfo as sensors
+    else:
+        logger.error("HWiNFO integration is only available on Windows")
+        try:
+            sys.exit(0)
+        except:
+            os._exit(0)
 elif HW_SENSORS == "STUB":
     logger.warning("Stub sensors, not real HW sensors")
     import library.sensors.sensors_stub_random as sensors

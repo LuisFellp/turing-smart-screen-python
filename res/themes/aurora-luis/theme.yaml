@@ -1,0 +1,223 @@
+# Tema original "Aurora": céu noturno com auroras, cartões de vidro fosco e anéis segmentados.
+# Fundo gerado por gerar_fundo.py (coordenadas dos anéis e dos cartões ficam nas constantes de lá).
+author: "luis"
+
+display:
+  DISPLAY_SIZE: 3.5"
+  DISPLAY_ORIENTATION: portrait
+  DISPLAY_RGB_LED: 64, 224, 214
+
+static_images:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 320
+    HEIGHT: 480
+
+static_text:
+  CPU_MODEL:
+    TEXT: Ryzen 7 9800X3D
+    X: 172
+    Y: 14
+    FONT: tektur/Tektur-Bold.ttf
+    FONT_SIZE: 12
+    FONT_COLOR: 204, 215, 242
+    BACKGROUND_IMAGE: background.png
+  GPU_MODEL:
+    TEXT: RX 9070 XT 16GB
+    X: 172
+    Y: 144
+    FONT: tektur/Tektur-Bold.ttf
+    FONT_SIZE: 12
+    FONT_COLOR: 204, 215, 242
+    BACKGROUND_IMAGE: background.png
+  RAM_MODEL:
+    TEXT: XPG Lancer 32GB
+    X: 172
+    Y: 274
+    FONT: tektur/Tektur-Bold.ttf
+    FONT_SIZE: 12
+    FONT_COLOR: 204, 215, 242
+    BACKGROUND_IMAGE: background.png
+
+STATS:
+  CPU:
+    PERCENTAGE:
+      INTERVAL: 2
+      RADIAL:
+        SHOW: true
+        X: 70
+        Y: 72
+        RADIUS: 48
+        WIDTH: 9
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        ANGLE_START: 135
+        ANGLE_END: 45
+        ANGLE_STEPS: 27
+        ANGLE_SEP: 3
+        CLOCKWISE: true
+        BAR_COLOR: 255, 107, 150
+        SHOW_TEXT: true
+        SHOW_UNIT: true
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 22
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 132
+        Y: 38
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 40
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+    FREQUENCY:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 184
+        Y: 101
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 17
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        # Substituído por CUSTOM CPU_FAN_RPM (o HWiNFO só informa RPM)
+        SHOW: false
+  GPU:
+    INTERVAL: 2
+    PERCENTAGE:
+      RADIAL:
+        SHOW: true
+        X: 70
+        Y: 202
+        RADIUS: 48
+        WIDTH: 9
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        ANGLE_START: 135
+        ANGLE_END: 45
+        ANGLE_STEPS: 27
+        ANGLE_SEP: 3
+        CLOCKWISE: true
+        BAR_COLOR: 64, 224, 214
+        SHOW_TEXT: true
+        SHOW_UNIT: true
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 22
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      # Com HW_SENSORS: HWINFO esta é a temperatura de hot spot
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 132
+        Y: 168
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 40
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+    MEMORY:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 184
+        Y: 231
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 17
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+    FPS:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: false
+        X: 214
+        Y: 424
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 34
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        # Substituído por CUSTOM GPU_FAN_RPM
+        SHOW: false
+  MEMORY:
+    INTERVAL: 2
+    VIRTUAL:
+      RADIAL:
+        SHOW: true
+        X: 70
+        Y: 332
+        RADIUS: 48
+        WIDTH: 9
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        ANGLE_START: 135
+        ANGLE_END: 45
+        ANGLE_STEPS: 27
+        ANGLE_SEP: 3
+        CLOCKWISE: true
+        BAR_COLOR: 190, 164, 255
+        SHOW_TEXT: true
+        SHOW_UNIT: true
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 22
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+      USED:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 132
+        Y: 302
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 32
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+      FREE:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 184
+        Y: 361
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 17
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+
+  CUSTOM:
+    INTERVAL: 2
+
+    GPU_HOTSPOT:
+      TEXT:
+        # Oculto: a temperatura principal da GPU já é o hot spot
+        SHOW: false
+
+    CPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 76
+        Y: 411
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 20
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png
+
+    GPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 76
+        Y: 437
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 20
+        FONT_COLOR: 240, 244, 255
+        BACKGROUND_IMAGE: background.png

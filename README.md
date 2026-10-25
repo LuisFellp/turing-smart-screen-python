@@ -1,3 +1,5 @@
+> **Fork do Luis:** osciloscópio de fósforo e monitor de UTI animados para a TURZX 3.5" (revisão A), temas novos e correções no driver da revisão A (corrupção de imagem, comando 195). Veja **[TELINHA.md](TELINHA.md)**.
+
 # ![Icon](https://raw.githubusercontent.com/mathoudebine/turing-smart-screen-python/main/res/icons/monitor-icon-17865/24.png) turing-smart-screen-python
 
 > [!WARNING]

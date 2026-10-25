@@ -1,0 +1,193 @@
+# Tema original "Fade": entardecer enevoado, bokeh e grão de filme, em paisagem (480x320). Fonte: Maple Mono.
+# Fundo gerado por gerar_fundo.py. Inspirado em "Fade Into You" (Mazzy Star).
+author: "luis"
+
+display:
+  DISPLAY_SIZE: 3.5"
+  DISPLAY_ORIENTATION: landscape
+  DISPLAY_RGB_LED: 200, 140, 255
+static_images:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 480
+    HEIGHT: 320
+STATS:
+  CPU:
+    PERCENTAGE:
+      INTERVAL: 1
+      GRAPH:
+        SHOW: true
+        X: 196
+        Y: 56
+        WIDTH: 258
+        HEIGHT: 8
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 255, 150, 172
+        BAR_OUTLINE: false
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 176
+        Y: 38
+        FONT: maple-mono/MapleMono-Light.ttf
+        FONT_SIZE: 46
+        FONT_COLOR: 240, 232, 250
+        BACKGROUND_IMAGE: background.png
+        ANCHOR: rt
+    TEMPERATURE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 196
+        Y: 74
+        FONT: maple-mono/MapleMono-Regular.ttf
+        FONT_SIZE: 13
+        FONT_COLOR: 240, 232, 250
+        BACKGROUND_IMAGE: background.png
+    FREQUENCY:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 286
+        Y: 74
+        FONT: maple-mono/MapleMono-Regular.ttf
+        FONT_SIZE: 13
+        FONT_COLOR: 186, 172, 218
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        SHOW: false
+  GPU:
+    INTERVAL: 2
+    PERCENTAGE:
+      GRAPH:
+        SHOW: true
+        X: 196
+        Y: 146
+        WIDTH: 258
+        HEIGHT: 8
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 150, 172, 255
+        BAR_OUTLINE: false
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 176
+        Y: 128
+        FONT: maple-mono/MapleMono-Light.ttf
+        FONT_SIZE: 46
+        FONT_COLOR: 240, 232, 250
+        BACKGROUND_IMAGE: background.png
+        ANCHOR: rt
+      INTERVAL: 1
+    TEMPERATURE:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 196
+        Y: 164
+        FONT: maple-mono/MapleMono-Regular.ttf
+        FONT_SIZE: 13
+        FONT_COLOR: 240, 232, 250
+        BACKGROUND_IMAGE: background.png
+    MEMORY:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 286
+        Y: 164
+        FONT: maple-mono/MapleMono-Regular.ttf
+        FONT_SIZE: 13
+        FONT_COLOR: 186, 172, 218
+        BACKGROUND_IMAGE: background.png
+    FPS:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: false
+        X: 52
+        Y: 293
+        FONT: maple-mono/MapleMono-Regular.ttf
+        FONT_SIZE: 17
+        FONT_COLOR: 240, 232, 250
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        SHOW: false
+  MEMORY:
+    INTERVAL: 1
+    VIRTUAL:
+      GRAPH:
+        SHOW: true
+        X: 196
+        Y: 236
+        WIDTH: 258
+        HEIGHT: 8
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 255, 214, 150
+        BAR_OUTLINE: false
+        BACKGROUND_IMAGE: background.png
+      PERCENT_TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 176
+        Y: 218
+        FONT: maple-mono/MapleMono-Light.ttf
+        FONT_SIZE: 46
+        FONT_COLOR: 240, 232, 250
+        BACKGROUND_IMAGE: background.png
+        ANCHOR: rt
+      USED:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 196
+        Y: 254
+        FONT: maple-mono/MapleMono-Regular.ttf
+        FONT_SIZE: 13
+        FONT_COLOR: 240, 232, 250
+        BACKGROUND_IMAGE: background.png
+      FREE:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 290
+        Y: 254
+        FONT: maple-mono/MapleMono-Regular.ttf
+        FONT_SIZE: 13
+        FONT_COLOR: 186, 172, 218
+        BACKGROUND_IMAGE: background.png
+  CUSTOM:
+    INTERVAL: 2
+    GPU_HOTSPOT:
+      TEXT:
+        SHOW: false
+    CPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 226
+        Y: 295
+        FONT: maple-mono/MapleMono-Regular.ttf
+        FONT_SIZE: 13
+        FONT_COLOR: 240, 232, 250
+        BACKGROUND_IMAGE: background.png
+        SHOW_UNIT: false
+    GPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 370
+        Y: 295
+        FONT: maple-mono/MapleMono-Regular.ttf
+        FONT_SIZE: 13
+        FONT_COLOR: 240, 232, 250
+        BACKGROUND_IMAGE: background.png
+        SHOW_UNIT: false

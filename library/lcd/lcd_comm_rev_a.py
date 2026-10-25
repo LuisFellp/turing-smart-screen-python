@@ -28,6 +28,14 @@ from library.lcd.lcd_comm import *
 from library.lcd.serialize import image_to_RGB565, chunked
 from library.log import logger
 
+# Local patch: see DisplayPILImage. Defaults only; config.yaml overrides them (SERIAL_SLICE_MAX_BYTES and
+# SERIAL_SLICE_PAUSE_MS). 9600 bytes = 10 rows of the landscape width. A sweep of slice sizes and pauses (and unsliced
+# sends) lost no blocks on one unit/firmware, so this is a cheap precaution, not a measured fix (see config.yaml).
+SLICE_MAX_BYTES = 9600
+SLICE_PAUSE_MS = 1
+# See Resync(): one full 320x480 RGB565 frame, the biggest bitmap any program (or the vendor app) may have left open
+RESYNC_BYTES = 320 * 480 * 2
+
 
 class Command(IntEnum):
     RESET = 101  # Resets the display
@@ -56,9 +64,14 @@ class SubRevision(Enum):
 # This class is for Turing Smart Screen (rev. A) 3.5" and UsbMonitor screens (all sizes)
 class LcdCommRevA(LcdComm):
     def __init__(self, com_port: str = "AUTO", display_width: int = 320, display_height: int = 480,
-                 update_queue: Optional[queue.Queue] = None):
+                 update_queue: Optional[queue.Queue] = None,
+                 slice_max_bytes: int = SLICE_MAX_BYTES, slice_pause_ms: float = SLICE_PAUSE_MS,
+                 resync_bytes: int = RESYNC_BYTES):
         logger.debug("HW revision: A")
         LcdComm.__init__(self, com_port, display_width, display_height, update_queue)
+        self.resync_bytes = resync_bytes
+        self.slice_max_bytes = slice_max_bytes
+        self.slice_pause_s = slice_pause_ms / 1000
         self.openSerial()
 
     def __del__(self):
@@ -123,7 +136,22 @@ class LcdCommRevA(LcdComm):
     def InitializeComm(self):
         self._hello()
 
+    def Resync(self):
+        # Local patch: if the previous program was killed in the middle of a bitmap, the display is still waiting for
+        # the rest of its pixels and eats the next bytes (including the RESET command) as pixel data; what comes after
+        # arrives misaligned and the serial starts dropping blocks ("Too fast! Slow down!") = garbage on screen.
+        # Zero bytes enough for the biggest possible bitmap close it. Measured 2026-10-23 after killing a sender
+        # mid-frame: 191 lost blocks without this, 0 with it (2 of 2). The extra zeros were harmless.
+        if self.resync_bytes <= 0:
+            return
+        logger.debug(f"Display resync: {self.resync_bytes} zero bytes")
+        zeros = bytes(self.get_width() * 8)
+        for _ in range(-(-self.resync_bytes // len(zeros))):
+            self.WriteLine(zeros)
+        time.sleep(0.5)
+
     def Reset(self):
+        self.Resync()
         logger.info("Display reset (COM port may change)...")
         # Reset command bypasses queue because it is run when queue threads are not yet started
         self.SendCommand(Command.RESET, 0, 0, 0, 0, bypass_queue=True)
@@ -205,15 +233,24 @@ class LcdCommRevA(LcdComm):
         assert image_height > 0, 'Image height must be > 0'
         assert image_width > 0, 'Image width must be > 0'
 
-        (x0, y0) = (x, y)
-        (x1, y1) = (x + image_width - 1, y + image_height - 1)
+        # Local patch: big images go as horizontal slices, each with its own command, and a short pause between
+        # slices. The display never acknowledges anything, and a single ~300 KB transfer makes the serial drop
+        # blocks (logged only as "Too fast! Slow down!"), which shows up as garbage on screen.
+        rows = max(1, self.slice_max_bytes // (image_width * 2))
+        for sy in range(0, image_height, rows):
+            sh = min(rows, image_height - sy)
+            part = image if sh == image_height else image.crop((0, sy, image_width, sy + sh))
+            rgb565le = image_to_RGB565(part, "little")
 
-        rgb565le = image_to_RGB565(image, "little")
+            self.SendCommand(Command.DISPLAY_BITMAP, x, y + sy, x + image_width - 1, y + sy + sh - 1)
 
-        self.SendCommand(Command.DISPLAY_BITMAP, x0, y0, x1, y1)
-
-        # Lock queue mutex then queue all the requests for the image data
-        with self.update_queue_mutex:
-            # Send image data by multiple of "display width" bytes
-            for chunk in chunked(rgb565le, width * 8):
-                self.SendLine(chunk)
+            # Lock queue mutex then queue all the requests for the image data
+            with self.update_queue_mutex:
+                # Send image data by multiple of "display width" bytes
+                for chunk in chunked(rgb565le, width * 8):
+                    self.SendLine(chunk)
+                if sy + sh < image_height and self.slice_pause_s > 0:
+                    if self.update_queue:
+                        self.update_queue.put((time.sleep, [self.slice_pause_s]))
+                    else:
+                        time.sleep(self.slice_pause_s)

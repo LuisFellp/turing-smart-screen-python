@@ -1,0 +1,291 @@
+author: "@amiltonjr"
+
+display:
+  DISPLAY_SIZE: 3.5"
+  DISPLAY_ORIENTATION: portrait
+  DISPLAY_RGB_LED: 255, 255, 0
+
+static_images:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 320
+    HEIGHT: 480
+
+static_text:
+  CPU_MODEL:
+    TEXT: AMD Ryzen 7 9800X3D
+    X: 50
+    Y: 127
+    FONT: tektur/Tektur-Bold.ttf
+    FONT_SIZE: 15
+    FONT_COLOR: 255, 239, 8
+    BACKGROUND_IMAGE: background.png
+  GPU_MODEL:
+    TEXT: AMD RX 9070XT 16GB
+    X: 50
+    Y: 215
+    FONT: tektur/Tektur-Bold.ttf
+    FONT_SIZE: 15
+    FONT_COLOR: 255, 239, 8
+    BACKGROUND_IMAGE: background.png
+  RAM_MODEL:
+    TEXT: XPG Lancer 2x16GB
+    X: 50
+    Y: 303
+    FONT: tektur/Tektur-Bold.ttf
+    FONT_SIZE: 15
+    FONT_COLOR: 255, 239, 8
+    BACKGROUND_IMAGE: background.png
+  CPU_FAN_LABEL:
+    TEXT: RAD FAN
+    X: 43
+    Y: 346
+    FONT: tektur/Tektur-Bold.ttf
+    FONT_SIZE: 15
+    FONT_COLOR: 255, 239, 8
+    BACKGROUND_IMAGE: background.png
+  GPU_FAN_LABEL:
+    TEXT: GPU FAN
+    X: 43
+    Y: 391
+    FONT: tektur/Tektur-Bold.ttf
+    FONT_SIZE: 15
+    FONT_COLOR: 255, 239, 8
+    BACKGROUND_IMAGE: background.png
+  FPS_LABEL:
+    TEXT: FPS
+    X: 43
+    Y: 429
+    FONT: tektur/Tektur-Bold.ttf
+    FONT_SIZE: 15
+    FONT_COLOR: 255, 239, 8
+    BACKGROUND_IMAGE: background.png
+
+STATS:
+  CPU:
+    PERCENTAGE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 180
+        Y: 80
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 40
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+      GRAPH:
+        SHOW: true
+        X: 40
+        Y: 100
+        WIDTH: 130
+        HEIGHT: 13
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 2, 216, 243
+        BAR_OUTLINE: true
+        BACKGROUND_IMAGE: background.png
+    FREQUENCY:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 88
+        Y: 80
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 16
+        FONT_COLOR: 255, 239, 8
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 38
+        Y: 80
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 16
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        # Replaced by CUSTOM CPU_FAN_RPM below (HWiNFO only reports the CPU fan in RPM)
+        SHOW: false
+        SHOW_UNIT: true
+        X: 170
+        Y: 337
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 23
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+  GPU:
+    INTERVAL: 2
+    PERCENTAGE:
+      GRAPH:
+        SHOW: true
+        X: 40
+        Y: 188
+        WIDTH: 130
+        HEIGHT: 13
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 2, 216, 243
+        BAR_OUTLINE: true
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 180
+        Y: 168
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 40
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+    MEMORY:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 88
+        Y: 167
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 16
+        FONT_COLOR: 255, 239, 8
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 38
+        Y: 167
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 16
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+    FPS:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: false
+        X: 170
+        Y: 435
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 30
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        # Replaced by CUSTOM GPU_FAN_RPM below (RPM instead of %)
+        SHOW: false
+        SHOW_UNIT: true
+        X: 170
+        Y: 382
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 23
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+  MEMORY:
+    INTERVAL: 2
+    VIRTUAL:
+      GRAPH:
+        SHOW: true
+        X: 40
+        Y: 276
+        WIDTH: 130
+        HEIGHT: 13
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 2, 216, 243
+        BAR_OUTLINE: true
+        BACKGROUND_IMAGE: background.png
+      USED:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 38
+        Y: 256
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 15
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+      FREE:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 106
+        Y: 256
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 15
+        FONT_COLOR: 255, 239, 8
+        BACKGROUND_IMAGE: background.png
+      PERCENT_TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 180
+        Y: 256
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 40
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+  DATE:
+    INTERVAL: 2
+    DAY:
+      TEXT:
+        SHOW: false
+        FORMAT: "dd/EEE MM/MMM"
+        X: 10
+        Y: 458
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 12
+        FONT_COLOR: 255, 239, 8
+        BACKGROUND_IMAGE: background.png
+        WIDTH: 125
+        ANCHOR: lt
+    HOUR:
+      TEXT:
+        SHOW: false
+        X: 193
+        Y: 32
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 15
+        FONT_COLOR: 255, 239, 8
+        BACKGROUND_IMAGE: background.png
+        WIDTH: 100
+        ANCHOR: lt
+
+  CUSTOM:
+    # Refresh interval (seconds) applies to all custom data classes
+    INTERVAL: 2
+
+    # Must match the class name in library/sensors/sensors_custom.py exactly
+    GPU_HOTSPOT:
+      TEXT:
+        # Hidden: with HW_SENSORS: HWINFO the main GPU TEMPERATURE already shows the hot spot
+        SHOW: false
+        X: 230
+        Y: 167
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 16
+        FONT_COLOR: 255, 100, 0
+        BACKGROUND_IMAGE: background.png
+
+    CPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 145
+        Y: 337
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 23
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png
+
+    GPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 145
+        Y: 382
+        FONT: tektur/Tektur-Bold.ttf
+        FONT_SIZE: 23
+        FONT_COLOR: 2, 216, 243
+        BACKGROUND_IMAGE: background.png

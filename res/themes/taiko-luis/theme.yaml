@@ -1,0 +1,246 @@
+# Tema original inspirado em Taiko no Tatsujin (paleta don/ka). Fundo gerado por gerar_fundo.py.
+author: "luis"
+
+display:
+  DISPLAY_SIZE: 3.5"
+  DISPLAY_ORIENTATION: portrait
+  DISPLAY_RGB_LED: 255, 120, 0
+
+static_images:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 320
+    HEIGHT: 480
+
+static_text:
+  CPU_MODEL:
+    TEXT: Ryzen 7 9800X3D
+    X: 80
+    Y: 72
+    FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+    FONT_SIZE: 17
+    FONT_COLOR: 58, 31, 18
+    BACKGROUND_IMAGE: background.png
+  GPU_MODEL:
+    TEXT: RX 9070 XT 16GB
+    X: 80
+    Y: 166
+    FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+    FONT_SIZE: 17
+    FONT_COLOR: 58, 31, 18
+    BACKGROUND_IMAGE: background.png
+  RAM_MODEL:
+    TEXT: XPG Lancer 2x16GB
+    X: 80
+    Y: 258
+    FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+    FONT_SIZE: 17
+    FONT_COLOR: 58, 31, 18
+    BACKGROUND_IMAGE: background.png
+  CPU_FAN_LABEL:
+    TEXT: RAD FAN
+    X: 24
+    Y: 352
+    FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+    FONT_SIZE: 18
+    FONT_COLOR: 232, 67, 46
+    BACKGROUND_IMAGE: background.png
+  GPU_FAN_LABEL:
+    TEXT: GPU FAN
+    X: 24
+    Y: 384
+    FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+    FONT_SIZE: 18
+    FONT_COLOR: 45, 155, 216
+    BACKGROUND_IMAGE: background.png
+  FPS_LABEL:
+    TEXT: FPS
+    X: 66
+    Y: 438
+    FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+    FONT_SIZE: 18
+    FONT_COLOR: 255, 228, 168
+    BACKGROUND_IMAGE: background.png
+
+STATS:
+  CPU:
+    PERCENTAGE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 184
+        Y: 94
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 38
+        FONT_COLOR: 232, 67, 46
+        BACKGROUND_IMAGE: background.png
+      GRAPH:
+        SHOW: true
+        X: 22
+        Y: 126
+        WIDTH: 156
+        HEIGHT: 12
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 232, 67, 46
+        BAR_OUTLINE: true
+        BACKGROUND_IMAGE: background.png
+    FREQUENCY:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 84
+        Y: 100
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 18
+        FONT_COLOR: 58, 31, 18
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 22
+        Y: 100
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 18
+        FONT_COLOR: 58, 31, 18
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        # Substituído por CUSTOM CPU_FAN_RPM (o HWiNFO só informa RPM)
+        SHOW: false
+  GPU:
+    INTERVAL: 2
+    PERCENTAGE:
+      GRAPH:
+        SHOW: true
+        X: 22
+        Y: 218
+        WIDTH: 156
+        HEIGHT: 12
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 45, 155, 216
+        BAR_OUTLINE: true
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 184
+        Y: 186
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 38
+        FONT_COLOR: 45, 155, 216
+        BACKGROUND_IMAGE: background.png
+    MEMORY:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 84
+        Y: 192
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 18
+        FONT_COLOR: 58, 31, 18
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      # Com HW_SENSORS: HWINFO esta é a temperatura de hot spot
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 22
+        Y: 192
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 18
+        FONT_COLOR: 58, 31, 18
+        BACKGROUND_IMAGE: background.png
+    FPS:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: false
+        X: 112
+        Y: 432
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 34
+        FONT_COLOR: 255, 255, 255
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        # Substituído por CUSTOM GPU_FAN_RPM
+        SHOW: false
+  MEMORY:
+    INTERVAL: 2
+    VIRTUAL:
+      GRAPH:
+        SHOW: true
+        X: 22
+        Y: 310
+        WIDTH: 156
+        HEIGHT: 12
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 240, 138, 28
+        BAR_OUTLINE: true
+        BACKGROUND_IMAGE: background.png
+      USED:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 22
+        Y: 286
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 16
+        FONT_COLOR: 58, 31, 18
+        BACKGROUND_IMAGE: background.png
+      FREE:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 98
+        Y: 286
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 16
+        FONT_COLOR: 150, 100, 60
+        BACKGROUND_IMAGE: background.png
+      PERCENT_TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 184
+        Y: 278
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 38
+        FONT_COLOR: 240, 138, 28
+        BACKGROUND_IMAGE: background.png
+
+  CUSTOM:
+    INTERVAL: 2
+
+    GPU_HOTSPOT:
+      TEXT:
+        # Oculto: a temperatura principal da GPU já é o hot spot
+        SHOW: false
+
+    CPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 150
+        Y: 350
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 22
+        FONT_COLOR: 58, 31, 18
+        BACKGROUND_IMAGE: background.png
+
+    GPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 150
+        Y: 382
+        FONT: mplus-rounded/MPLUSRounded1c-ExtraBold.ttf
+        FONT_SIZE: 22
+        FONT_COLOR: 58, 31, 18
+        BACKGROUND_IMAGE: background.png

@@ -16,6 +16,8 @@ config:
   # Choose the appropriate method for reading your hardware sensors:
   # - PYTHON         use Python libraries (psutils, GPUtil...) to read hardware sensors (supports all OS but not all HW)
   # - LHM            use LibreHardwareMonitor library to read hardware sensors (Windows only - NEEDS ADMIN RIGHTS)
+  # - HWINFO         read sensors from HWiNFO's Gadget registry interface (Windows only, HWiNFO must be running
+  #                  with "Report value in Gadget" enabled, see library/sensors/sensors_hwinfo.py)
   # - STUB / STATIC  use random/static data instead of real hardware sensors
   # - AUTO           use the best method based on your OS: Windows OS will use LHM, other OS will use Python libraries
   HW_SENSORS: AUTO
@@ -78,3 +80,30 @@ display:
   # This behavior causes the display to disconnect/reconnect, and the COM port to change.
   # On some displays (like rev. A) it can be an issue, in this case change the value to "false".
   RESET_ON_STARTUP: true
+
+  # Rev. A only: images bigger than SERIAL_SLICE_MAX_BYTES are sent as horizontal slices, each with its own command,
+  # with SERIAL_SLICE_PAUSE_MS between slices. The screen never acknowledges anything; lost blocks show up in the log
+  # as "Too fast! Slow down!" and as garbage on screen. Tested on a TURZX 3.5" (rev. A): 5/10/20 rows x 0-3 ms and
+  # unsliced, 3 x 10 full frames each: 0 lost blocks everywhere, 114-125 KB/s. A cheap precaution, not a measured fix.
+  SERIAL_SLICE_MAX_BYTES: 9600
+  SERIAL_SLICE_PAUSE_MS: 1
+
+  # Rev. A only: zero bytes sent before the startup reset. A program killed mid-bitmap (task stopped, PC shut down)
+  # leaves the display waiting for pixels, so it eats the next program's RESET as pixels and then loses blocks
+  # (garbage on screen). 307200 = one full frame closes any open bitmap (~2.5 s at start). Measured: 191 lost blocks
+  # without it, 0 with it. 0 disables.
+  SERIAL_RESYNC_BYTES: 307200
+
+# vitais.py (animated "patient monitor" mode). Load = share of each frame spent sending; the log reports it every
+# 5 min ("vitais: N quadros, X ms por quadro (Y % do tempo)"). Keep it well under 100 %.
+vitais:
+  FPS: 15             # frames per second of the sweep
+  DX: 4               # new columns per frame (sweep speed = FPS x DX px/s); 324 must be divisible by it
+  FIELD_BUDGET: 2600  # bytes per frame for numbers and texts, sent after the sweep
+
+# osciloscopio.py (4-channel phosphor scope drawn with command 195). The log reports the load every 5 min
+# ("osciloscopio: N quadros, X ms por quadro (Y % do tempo)").
+osciloscopio:
+  FPS: 30             # frames per second
+  DX: 2               # new columns per frame (sweep speed = FPS x DX px/s); must be <= 10
+  FIELD_BUDGET: 1600  # bitmap bytes per frame for numbers and texts

@@ -1,0 +1,221 @@
+# Tema original "Metrô": mapa de linhas em papel quadriculado, em paisagem (480x320).
+# Cada sensor é uma linha colorida e o preenchimento da barra é o trem. Fundo gerado por gerar_fundo.py.
+author: "luis"
+
+display:
+  DISPLAY_SIZE: 3.5"
+  DISPLAY_ORIENTATION: landscape
+  DISPLAY_RGB_LED: 255, 255, 255
+
+static_images:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 480
+    HEIGHT: 320
+
+static_text:
+  CPU_MODEL:
+    TEXT: Ryzen 7 9800X3D
+    X: 132
+    Y: 42
+    FONT: roboto/Roboto-Medium.ttf
+    FONT_SIZE: 13
+    FONT_COLOR: 112, 108, 98
+    BACKGROUND_IMAGE: background.png
+  GPU_MODEL:
+    TEXT: RX 9070 XT 16GB
+    X: 132
+    Y: 126
+    FONT: roboto/Roboto-Medium.ttf
+    FONT_SIZE: 13
+    FONT_COLOR: 112, 108, 98
+    BACKGROUND_IMAGE: background.png
+  RAM_MODEL:
+    TEXT: XPG Lancer 2x16GB
+    X: 132
+    Y: 210
+    FONT: roboto/Roboto-Medium.ttf
+    FONT_SIZE: 13
+    FONT_COLOR: 112, 108, 98
+    BACKGROUND_IMAGE: background.png
+
+STATS:
+  CPU:
+    PERCENTAGE:
+      INTERVAL: 2
+      GRAPH:
+        SHOW: true
+        X: 76
+        Y: 68
+        WIDTH: 250
+        HEIGHT: 16
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 226, 54, 62
+        BAR_OUTLINE: false
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 344
+        Y: 58
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 40
+        FONT_COLOR: 226, 54, 62
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 76
+        Y: 100
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 14
+        FONT_COLOR: 28, 32, 48
+        BACKGROUND_IMAGE: background.png
+    FREQUENCY:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 150
+        Y: 100
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 14
+        FONT_COLOR: 28, 32, 48
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        SHOW: false
+  GPU:
+    INTERVAL: 2
+    PERCENTAGE:
+      GRAPH:
+        SHOW: true
+        X: 76
+        Y: 152
+        WIDTH: 250
+        HEIGHT: 16
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 28, 110, 222
+        BAR_OUTLINE: false
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 344
+        Y: 142
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 40
+        FONT_COLOR: 28, 110, 222
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      # Com HW_SENSORS: HWINFO esta é a temperatura de hot spot
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 76
+        Y: 184
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 14
+        FONT_COLOR: 28, 32, 48
+        BACKGROUND_IMAGE: background.png
+    MEMORY:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 150
+        Y: 184
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 14
+        FONT_COLOR: 28, 32, 48
+        BACKGROUND_IMAGE: background.png
+    FPS:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: false
+        X: 376
+        Y: 6
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 22
+        FONT_COLOR: 255, 255, 255
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        SHOW: false
+  MEMORY:
+    INTERVAL: 2
+    VIRTUAL:
+      GRAPH:
+        SHOW: true
+        X: 76
+        Y: 236
+        WIDTH: 250
+        HEIGHT: 16
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 24, 156, 92
+        BAR_OUTLINE: false
+        BACKGROUND_IMAGE: background.png
+      PERCENT_TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 344
+        Y: 226
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 40
+        FONT_COLOR: 24, 156, 92
+        BACKGROUND_IMAGE: background.png
+      USED:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 76
+        Y: 268
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 14
+        FONT_COLOR: 28, 32, 48
+        BACKGROUND_IMAGE: background.png
+      FREE:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 170
+        Y: 268
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 14
+        FONT_COLOR: 112, 108, 98
+        BACKGROUND_IMAGE: background.png
+
+  CUSTOM:
+    INTERVAL: 2
+
+    GPU_HOTSPOT:
+      TEXT:
+        # Oculto: a temperatura principal da GPU já é o hot spot
+        SHOW: false
+
+    CPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 62
+        Y: 294
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 17
+        FONT_COLOR: 255, 255, 255
+        BACKGROUND_IMAGE: background.png
+
+    GPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 296
+        Y: 294
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 17
+        FONT_COLOR: 255, 255, 255
+        BACKGROUND_IMAGE: background.png

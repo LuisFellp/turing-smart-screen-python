@@ -23,6 +23,7 @@ import math
 import os
 import platform
 import queue
+import subprocess
 import sys
 import threading
 import time
@@ -46,8 +47,30 @@ class Orientation(IntEnum):
 
 # The screen resets itself when the program starts, so its COM port can disappear or change for a
 # few seconds: opening it is retried instead of giving up (and exiting) on the first failure.
-SERIAL_OPEN_ATTEMPTS = 10
+SERIAL_OPEN_ATTEMPTS = 60
 SERIAL_OPEN_RETRY_DELAY = 1  # seconds
+
+# LOCAL PATCH (not in upstream): when the screen drops off USB and comes back it has lost everything that was drawn
+# (background, orientation, brightness), but the program only resends the line that failed, so the display ends up
+# full of artifacts. Restarting the program reruns the whole start-up sequence. It is skipped during the first
+# seconds after start-up, so a screen that keeps dropping cannot put the program in a restart loop.
+RESTART_ON_RECONNECT_MIN_UPTIME = 30  # seconds
+_PROCESS_START = time.monotonic()
+
+
+def restart_program_after_reconnect():
+    uptime = time.monotonic() - _PROCESS_START
+    if uptime < RESTART_ON_RECONNECT_MIN_UPTIME:
+        logger.warning(f"Screen reconnected only {uptime:.0f}s after start-up: not restarting the program")
+        return
+
+    logger.warning("Screen reconnected: restarting the program to redraw the display")
+    try:
+        subprocess.Popen([sys.executable, os.path.abspath(sys.argv[0]), *sys.argv[1:]], cwd=os.getcwd())
+    except Exception as e:
+        logger.error(f"Cannot restart the program: {e}")
+        return
+    os._exit(0)
 
 
 class LcdComm(ABC):
@@ -183,6 +206,7 @@ class LcdComm(ABC):
             self.closeSerial()
             time.sleep(1)
             self.openSerial()
+            restart_program_after_reconnect()
             self.serial_write(line)
 
     def ReadData(self, readSize: int):
@@ -200,6 +224,7 @@ class LcdComm(ABC):
             self.closeSerial()
             time.sleep(1)
             self.openSerial()
+            restart_program_after_reconnect()
             return self.serial_read(readSize)
 
     @staticmethod
@@ -421,11 +446,30 @@ class LcdComm(ABC):
                 y2 = bar_filled_height
             else:
                 y1 = height - 1 - bar_filled_height
-        draw.rectangle([x1, y1, x2, y2], fill=bar_color, outline=bar_color)
+        # Rounded ends (local patch): drawn 4x larger on a mask, then downscaled for smooth edges
+        ss = 4
+        radius = min(width, height) / 2
+
+        def paste_rounded(box, outline_only=False):
+            bx1, by1, bx2, by2 = box
+            if bx2 < bx1 or by2 < by1:
+                return
+            w, h = int(bx2 - bx1 + 1), int(by2 - by1 + 1)
+            mask = Image.new('L', (w * ss, h * ss), 0)
+            r = min(radius, w / 2, h / 2) * ss
+            md = ImageDraw.Draw(mask)
+            if outline_only:
+                md.rounded_rectangle([0, 0, w * ss - 1, h * ss - 1], radius=r, outline=255, width=ss)
+            else:
+                md.rounded_rectangle([0, 0, w * ss - 1, h * ss - 1], radius=r, fill=255)
+            mask = mask.resize((w, h), Image.LANCZOS)
+            bar_image.paste(Image.new('RGB', (w, h), bar_color), (int(bx1), int(by1)), mask)
+
+        paste_rounded((x1, y1, x2, y2))
 
         if bar_outline:
             # Draw outline
-            draw.rectangle([0, 0, width - 1, height - 1], fill=None, outline=bar_color)
+            paste_rounded((0, 0, width - 1, height - 1), outline_only=True)
 
         self.DisplayPILImage(bar_image, x, y)
 
@@ -615,6 +659,17 @@ class LcdComm(ABC):
             # Crop bitmap to keep only the progress bar background
             bar_image = bar_image.crop(box=bbox)
 
+        # Local patch (concentric rings): the square crop of this ring erases neighbouring rings that
+        # overlap it, so put back the last drawn annulus of every other ring before drawing this one
+        ring_key = (xc, yc, radius)
+        layers = self.__dict__.setdefault('_radial_layers', {})
+        for (oxc, oyc, orad), (oimg, omask) in layers.items():
+            if (oxc, oyc, orad) == ring_key:
+                continue
+            ox, oy = oxc - orad - bbox[0], oyc - orad - bbox[1]
+            if ox < bar_image.width and oy < bar_image.height and ox + oimg.width > 0 and oy + oimg.height > 0:
+                bar_image.paste(oimg, (ox, oy), omask)
+
         # Draw progress bar
         pct = (value - min_value) / (max_value - min_value)
         draw = ImageDraw.Draw(bar_image)
@@ -726,6 +781,14 @@ class LcdComm(ABC):
                          angle_start - etapes * angle_complet,
                          fill=bar_color,
                          width=bar_width)
+
+        if background_image is not None:
+            ring_mask = Image.new('L', (diameter * 4, diameter * 4), 0)
+            ring_draw = ImageDraw.Draw(ring_mask)
+            ring_draw.ellipse([0, 0, diameter * 4 - 1, diameter * 4 - 1], fill=255)
+            ring_draw.ellipse([bar_width * 4, bar_width * 4, (diameter - bar_width) * 4 - 1,
+                               (diameter - bar_width) * 4 - 1], fill=0)
+            layers[ring_key] = (bar_image.copy(), ring_mask.resize((diameter, diameter), Image.LANCZOS))
 
         # Draw text
         if with_text:

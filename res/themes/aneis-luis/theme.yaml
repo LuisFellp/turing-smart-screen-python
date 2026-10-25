@@ -1,0 +1,209 @@
+# Tema original "Anéis": três anéis concêntricos (CPU, GPU, RAM) com o FPS no centro, em paisagem (480x320).
+# Fundo gerado por gerar_fundo.py (centro, raios e ângulos dos anéis ficam nas constantes de lá).
+author: "luis"
+
+display:
+  DISPLAY_SIZE: 3.5"
+  DISPLAY_ORIENTATION: landscape
+  DISPLAY_RGB_LED: 40, 214, 255
+
+static_images:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 480
+    HEIGHT: 320
+
+STATS:
+  CPU:
+    PERCENTAGE:
+      INTERVAL: 2
+      RADIAL:
+        SHOW: true
+        X: 150
+        Y: 160
+        RADIUS: 146
+        WIDTH: 24
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        ANGLE_START: 270
+        ANGLE_END: 260
+        ANGLE_STEPS: 40
+        ANGLE_SEP: 2
+        CLOCKWISE: true
+        BAR_COLOR: 255, 72, 110
+        SHOW_TEXT: false
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 404
+        Y: 18
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 38
+        FONT_COLOR: 255, 72, 110
+        BACKGROUND_IMAGE: background.png
+        ANCHOR: rt
+    TEMPERATURE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 316
+        Y: 62
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 15
+        FONT_COLOR: 190, 198, 222
+        BACKGROUND_IMAGE: background.png
+    FREQUENCY:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 378
+        Y: 62
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 15
+        FONT_COLOR: 190, 198, 222
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        SHOW: false
+  GPU:
+    INTERVAL: 2
+    PERCENTAGE:
+      RADIAL:
+        SHOW: true
+        X: 150
+        Y: 160
+        RADIUS: 116
+        WIDTH: 24
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        ANGLE_START: 270
+        ANGLE_END: 260
+        ANGLE_STEPS: 40
+        ANGLE_SEP: 2
+        CLOCKWISE: true
+        BAR_COLOR: 40, 214, 255
+        SHOW_TEXT: false
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 404
+        Y: 100
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 38
+        FONT_COLOR: 40, 214, 255
+        BACKGROUND_IMAGE: background.png
+        ANCHOR: rt
+    TEMPERATURE:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 316
+        Y: 144
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 15
+        FONT_COLOR: 190, 198, 222
+        BACKGROUND_IMAGE: background.png
+    MEMORY:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 378
+        Y: 144
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 15
+        FONT_COLOR: 190, 198, 222
+        BACKGROUND_IMAGE: background.png
+    FPS:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: false
+        X: 352
+        Y: 248
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 28
+        FONT_COLOR: 255, 255, 255
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        SHOW: false
+  MEMORY:
+    INTERVAL: 2
+    VIRTUAL:
+      RADIAL:
+        SHOW: true
+        X: 150
+        Y: 160
+        RADIUS: 86
+        WIDTH: 24
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        ANGLE_START: 270
+        ANGLE_END: 260
+        ANGLE_STEPS: 40
+        ANGLE_SEP: 2
+        CLOCKWISE: true
+        BAR_COLOR: 170, 255, 90
+        SHOW_TEXT: false
+        BACKGROUND_IMAGE: background.png
+      PERCENT_TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 404
+        Y: 182
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 38
+        FONT_COLOR: 170, 255, 90
+        BACKGROUND_IMAGE: background.png
+        ANCHOR: rt
+      USED:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 316
+        Y: 226
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 15
+        FONT_COLOR: 190, 198, 222
+        BACKGROUND_IMAGE: background.png
+      FREE:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 378
+        Y: 226
+        FONT: roboto/Roboto-Bold.ttf
+        FONT_SIZE: 15
+        FONT_COLOR: 130, 140, 170
+        BACKGROUND_IMAGE: background.png
+  CUSTOM:
+    INTERVAL: 2
+    GPU_HOTSPOT:
+      TEXT:
+        SHOW: false
+    CPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: false
+        X: 346
+        Y: 290
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 12
+        FONT_COLOR: 255, 255, 255
+        BACKGROUND_IMAGE: background.png
+    GPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: false
+        X: 346
+        Y: 303
+        FONT: roboto/Roboto-Black.ttf
+        FONT_SIZE: 12
+        FONT_COLOR: 255, 255, 255
+        BACKGROUND_IMAGE: background.png

@@ -142,3 +142,6 @@ tmp
 
 version.txt
 external/LibreHardwareMonitor/LibreHardwareMonitorLib.sys
+
+# PresentMon (Intel, MIT): baixado à parte, ver external/PresentMon/LEIA-ME.md
+external/PresentMon/*.exe

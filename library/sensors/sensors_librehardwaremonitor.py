@@ -26,6 +26,7 @@ import ctypes
 import math
 import os
 import sys
+import threading
 import time
 from statistics import mean
 from typing import Tuple
@@ -91,13 +92,25 @@ for hardware in handle.Hardware:
         logger.info("Found Network interface: %s" % hardware.Name)
 
 
+# LOCAL PATCH (not in upstream): CPU PERCENTAGE, FREQUENCY and TEMPERATURE are each scheduled on their own
+# thread (see library/scheduler.py), so up to 3 threads were calling hardware.Update() on this same shared
+# LHM Cpu object at once, unsynchronized. LibreHardwareMonitor's CPU load sensor needs a consistent time delta
+# between updates to compute an accurate reading, and this race made it read a wrong, steadily low percentage
+# (e.g. stuck around 2%) instead of matching Task Manager. This lock serializes every access to `handle`
+# (all functions below use it) so only one thread touches LibreHardwareMonitor at a time.
+# RLock (not a plain Lock): fan_percent() below acquires it and then calls get_hw_and_update(), which
+# acquires it again on the same thread.
+_hw_lock = threading.RLock()
+
+
 def get_hw_and_update(hwtype: Hardware.HardwareType, name: str = None) -> Hardware.Hardware:
-    for hardware in handle.Hardware:
-        if hardware.HardwareType == hwtype:
-            if (name and hardware.Name == name) or name is None:
-                hardware.Update()
-                return hardware
-    return None
+    with _hw_lock:
+        for hardware in handle.Hardware:
+            if hardware.HardwareType == hwtype:
+                if (name and hardware.Name == name) or name is None:
+                    hardware.Update()
+                    return hardware
+        return None
 
 
 def get_gpu_name() -> str:
@@ -165,10 +178,12 @@ def get_gpu_name() -> str:
 
 
 def get_net_interface_and_update(if_name: str) -> Hardware.Hardware:
-    for hardware in handle.Hardware:
-        if hardware.HardwareType == Hardware.HardwareType.Network and hardware.Name == if_name:
-            hardware.Update()
-            return hardware
+    # LOCAL PATCH (not in upstream): same shared-handle race as get_hw_and_update() above.
+    with _hw_lock:
+        for hardware in handle.Hardware:
+            if hardware.HardwareType == Hardware.HardwareType.Network and hardware.Name == if_name:
+                hardware.Update()
+                return hardware
 
     logger.warning("Network interface '%s' not found. Check names in config.yaml." % if_name)
     return None
@@ -243,16 +258,19 @@ class Cpu(sensors.Cpu):
 
     @staticmethod
     def fan_percent(fan_name: str = None) -> float:
-        mb = get_hw_and_update(Hardware.HardwareType.Motherboard)
-        try:
-            for sh in mb.SubHardware:
-                sh.Update()
-                for sensor in sh.Sensors:
-                    if sensor.SensorType == Hardware.SensorType.Control and "#2" in str(
-                            sensor.Name) and sensor.Value is not None:  # Is Motherboard #2 Fan always the CPU Fan ?
-                        return float(sensor.Value)
-        except:
-            pass
+        # LOCAL PATCH (not in upstream): same shared-handle race as get_hw_and_update() above, extended to
+        # cover the sh.Update() calls below (get_hw_and_update() re-enters the same RLock for `mb`).
+        with _hw_lock:
+            mb = get_hw_and_update(Hardware.HardwareType.Motherboard)
+            try:
+                for sh in mb.SubHardware:
+                    sh.Update()
+                    for sensor in sh.Sensors:
+                        if sensor.SensorType == Hardware.SensorType.Control and "#2" in str(
+                                sensor.Name) and sensor.Value is not None:  # Is Motherboard #2 Fan always the CPU Fan ?
+                            return float(sensor.Value)
+            except:
+                pass
 
         # No Fan Speed sensor for this CPU model
         return math.nan

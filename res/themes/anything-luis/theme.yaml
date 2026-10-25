@@ -1,0 +1,193 @@
+# Tema original "Anything": pôr do sol pintado à mão, cartões de papel e letra manuscrita, em paisagem (480x320).
+# Fundo gerado por gerar_fundo.py. Barras atualizam a cada 1 s para a tela parecer respirar.
+author: "luis"
+
+display:
+  DISPLAY_SIZE: 3.5"
+  DISPLAY_ORIENTATION: landscape
+  DISPLAY_RGB_LED: 255, 170, 120
+static_images:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 480
+    HEIGHT: 320
+STATS:
+  CPU:
+    PERCENTAGE:
+      INTERVAL: 1
+      GRAPH:
+        SHOW: true
+        X: 76
+        Y: 56
+        WIDTH: 282
+        HEIGHT: 18
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 222, 84, 64
+        BAR_OUTLINE: false
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 452
+        Y: 22
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 50
+        FONT_COLOR: 222, 84, 64
+        BACKGROUND_IMAGE: background.png
+        ANCHOR: rt
+    TEMPERATURE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 76
+        Y: 76
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 74, 44, 48
+        BACKGROUND_IMAGE: background.png
+    FREQUENCY:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 160
+        Y: 76
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 150, 104, 98
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        SHOW: false
+  GPU:
+    INTERVAL: 2
+    PERCENTAGE:
+      GRAPH:
+        SHOW: true
+        X: 76
+        Y: 150
+        WIDTH: 282
+        HEIGHT: 18
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 150, 72, 128
+        BAR_OUTLINE: false
+        BACKGROUND_IMAGE: background.png
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 452
+        Y: 116
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 50
+        FONT_COLOR: 150, 72, 128
+        BACKGROUND_IMAGE: background.png
+        ANCHOR: rt
+      INTERVAL: 1
+    TEMPERATURE:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 76
+        Y: 170
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 74, 44, 48
+        BACKGROUND_IMAGE: background.png
+    MEMORY:
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 160
+        Y: 170
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 150, 104, 98
+        BACKGROUND_IMAGE: background.png
+    FPS:
+      INTERVAL: 2
+      TEXT:
+        SHOW: true
+        SHOW_UNIT: false
+        X: 58
+        Y: 290
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 22
+        FONT_COLOR: 255, 244, 228
+        BACKGROUND_IMAGE: background.png
+    FAN_SPEED:
+      INTERVAL: 2
+      TEXT:
+        SHOW: false
+  MEMORY:
+    INTERVAL: 1
+    VIRTUAL:
+      GRAPH:
+        SHOW: true
+        X: 76
+        Y: 244
+        WIDTH: 282
+        HEIGHT: 18
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 88, 140, 80
+        BAR_OUTLINE: false
+        BACKGROUND_IMAGE: background.png
+      PERCENT_TEXT:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 452
+        Y: 210
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 50
+        FONT_COLOR: 88, 140, 80
+        BACKGROUND_IMAGE: background.png
+        ANCHOR: rt
+      USED:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 76
+        Y: 264
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 74, 44, 48
+        BACKGROUND_IMAGE: background.png
+      FREE:
+        SHOW: true
+        SHOW_UNIT: true
+        X: 176
+        Y: 264
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 150, 104, 98
+        BACKGROUND_IMAGE: background.png
+  CUSTOM:
+    INTERVAL: 2
+    GPU_HOTSPOT:
+      TEXT:
+        SHOW: false
+    CPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 268
+        Y: 291
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 17
+        FONT_COLOR: 255, 244, 228
+        BACKGROUND_IMAGE: background.png
+        SHOW_UNIT: false
+    GPU_FAN_RPM:
+      TEXT:
+        SHOW: true
+        X: 384
+        Y: 291
+        FONT: patrickhand/PatrickHand-Regular.ttf
+        FONT_SIZE: 17
+        FONT_COLOR: 255, 244, 228
+        BACKGROUND_IMAGE: background.png
+        SHOW_UNIT: false
